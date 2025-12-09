@@ -22,8 +22,8 @@
               <a href="{% url 'blogs:home' %}" class="nav-link">Blogs</a>
             </div>
             <div class="col-md-6">
-              <form class="d-flex" role="search">
-                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" />
+              <form class="d-flex" role="search" action="{% url 'blogs:search' %}">
+                <input class="form-control me-2" type="search" placeholder="Search" aria-label="Search" name="keyword" />
                 <button class="btn btn-outline-success btn-round" type="submit">Go</button>
               </form>
             </div>
@@ -46,18 +46,11 @@
           <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation"><span><i class="fa fa-bars" style="font-size: 30px;color: rgba(156, 95, 161, 1);"></i></span></button>
           <div class="collapse navbar-collapse" id="navbarNav">
             <ul class="navbar-nav mx-auto">
-              <li class="nav-item">
-                <a class="nav-link active" aria-current="page" href="#">Home</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Features</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link" href="#">Pricing</a>
-              </li>
-              <li class="nav-item">
-                <a class="nav-link disabled" aria-disabled="true">Disabled</a>
-              </li>
+              {% for cat in categories %}
+                <li class="nav-item">
+                  <a class="nav-link {% if cat.category_slug in request.path %}active{% endif %}" aria-current="page" href="{% url 'blogs:blog_by_category' cat.category_slug %}">{{ cat.category_name }}</a>
+                </li>
+              {% endfor %}
             </ul>
           </div>
         </div>

@@ -64,3 +64,16 @@ body {
 a{
     color:rgb(148, 90, 153) !important;
 }
+
+
+.active {
+    border-bottom: 5px solid rgb(191, 128, 197) !important;
+    
+}
+
+.tag {
+    color:rgb(148, 90, 153);
+    font-size: 20px;
+    
+    
+}
