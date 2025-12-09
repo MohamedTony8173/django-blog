@@ -1,1 +1,20 @@
-register page
+{% extends '_base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}
+  user - register
+{% endblock %}
+{% block content %}
+  <div class="row">
+    <div class="col-md-8 mx-auto bg-light p-5">
+      <h3 class="display-6 my-2 fw-bold">Register Form</h3>
+      <form action="{% url 'users:register' %}" method="post">
+        {% csrf_token %}
+        {{ form|crispy }}
+        <input type="submit" value="Register" class="btn btn-primary px-5" />
+      </form>
+        <div class="d-flex mt-5 justify-content-between algin-items-center">
+        <small>Already Have an Account! <a href="{% url 'users:login' %}" class="fw-bold">Sign Ip Now</a></small>
+      </div>
+    </div>
+  </div>
+{% endblock %}

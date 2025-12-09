@@ -50,3 +50,17 @@ body {
     border: none !important;
     border-radius: 0px !important;
 }
+
+.btn-primary{
+    background-color: rgb(81, 1, 173) !important;
+    border: rgb(81, 1, 173) !important;
+}
+.btn-primary:hover{
+    background-color: rgb(101, 10, 206) !important;
+    border: rgb(104, 7, 216) !important;
+}
+
+
+a{
+    color:rgb(148, 90, 153) !important;
+}
