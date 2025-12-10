@@ -1,0 +1,20 @@
+{% extends '_base.html' %}
+{% block title %}
+  blog - about
+{% endblock %}
+
+{% block content %}
+  <div class="row bg-light p-3">
+    <h5 class="fw-bold px-4">{{about.about_header}}</h5>
+      <div class="col mx-auto">
+        <div class="card">
+            <div class="card-body pt-0">
+                <hr class="my-1 border-3 border-primary" style="width: 60px;">
+                <p class="text-muted">{{about.about_content}}</p>
+            </div>
+        </div>
+      </div>
+  </div>
+  {% block sidebar %}{% endblock sidebar %}
+
+{% endblock %}

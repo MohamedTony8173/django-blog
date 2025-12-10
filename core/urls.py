@@ -26,4 +26,5 @@ urlpatterns = [
     path("", include("blogs.urls", namespace="blogs")),
     path("accounts/", include("users.urls", namespace="users")),
     path("dashboard/", include("dashboards.urls", namespace="dashboards")),
+    path('about/',include('social.urls',namespace='social')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

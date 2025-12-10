@@ -40,6 +40,7 @@ INSTALLED_APPS = [
     'users.apps.UsersConfig',
     'blogs.apps.BlogsConfig',
     'dashboards.apps.DashboardsConfig',
+    'social.apps.SocialConfig',
     'crispy_forms',
      "crispy_bootstrap5",
 ]
@@ -67,6 +68,8 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'blogs.context_processors.categories_list',
+                'blogs.context_processors.social_about',
+                'blogs.context_processors.social_link',
             ],
         },
     },
