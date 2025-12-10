@@ -150,3 +150,6 @@ MESSAGE_TAGS = {
         messages.WARNING: 'warning',
         messages.ERROR: 'danger',  # This line is crucial
     }
+
+
+LOGIN_REDIRECT_URL = '/dashboard/'

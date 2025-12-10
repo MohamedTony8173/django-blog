@@ -8,6 +8,7 @@
     <div class="col-md-8 mx-auto bg-light p-5">
       <h3 class="display-6 my-2 fw-bold">Login Form</h3>
       <form action="{% url 'users:login' %}" method="post">
+        <input type="hidden" name="next" value="{{ request.GET.next }}">
         {% csrf_token %}
         {{ form|crispy }}
         <input type="submit" value="Login" class="btn btn-primary px-5 py-1" />
