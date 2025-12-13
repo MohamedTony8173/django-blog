@@ -1,0 +1,28 @@
+{% extends '_base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}
+  blog - dashboard - user -create
+{% endblock %}
+
+{% block content %}
+  <div class="row">
+    <div class="col">
+      <hr class="my-1 border-4 border-primary" style="width: 100%;" />
+      <div class="d-flex justify-content-between align-items-center">
+        <a href="" class="px-3 my-2 btn fw-bold fs-5">Create User:</a>
+        <a href="{% url 'dashboards:dashboard_user' %}?next={{ request.path }}" class="nav-link px-3">&larr; Back</a>
+      </div>
+      <div class="card p-3">
+        <form action="{% url 'dashboards:dashboard_user_create' %}" method="post">
+          {% csrf_token %}
+          {{ form|crispy }}
+          <input type="submit" value="Create" class="btn btn-primary px-5 py-1" />
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block sidebar %}
+  {% include 'dashboards/sidebar.html' %}
+{% endblock %}

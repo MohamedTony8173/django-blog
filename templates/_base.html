@@ -7,6 +7,8 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous" />
     <link rel="stylesheet" href="{% static 'css/style.css' %}" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link rel="shortcut icon" href="{% static 'img/fav.png' %}" type="image/x-icon">
     <title>
       {% block title %}
 
@@ -76,27 +78,27 @@
           {% endblock %}
         </div>
         {% block sidebar %}
-        <div class="col-md-3 my-1">
-          <div class="card p-2 shadow-sm">
-            <h3 class="d-display-5 pt-2">{{ about.about_header }}</h3>
-            <hr />
-            <p>{{ about.about_content|truncatewords:100 }}</p>
-            <a href="{% url 'social:about_page' %}" class="nav-link my-3">Read More</a>
-          </div>
+          <div class="col-md-3 my-1">
+            <div class="card p-2 shadow-sm">
+              <h3 class="d-display-5 pt-2">{{ about.about_header }}</h3>
+              <hr />
+              <p>{{ about.about_content|truncatewords:100 }}</p>
+              <a href="{% url 'social:about_page' %}" class="nav-link my-3">Read More</a>
+            </div>
 
-          <div class="card p-2 my-3 shadow-sm">
-            <h3 class="d-display-5 pt-2">Social Media</h3>
-            <hr />
+            <div class="card p-2 my-3 shadow-sm">
+              <h3 class="d-display-5 pt-2">Social Media</h3>
+              <hr />
 
-            {% for social in social_links %}
-              <a href="{{ social.social_link }}" class="nav-link my-1" target="_blank">
-                <img src="{{ social.social_icon.url }}" alt="" style="width: 20px;height:auto;" />
-                &nbsp;{{ social.social_name }}
-              </a>
-            {% endfor %}
+              {% for social in social_links %}
+                <a href="{{ social.social_link }}" class="nav-link my-1" target="_blank">
+                  <img src="{{ social.social_icon.url }}" alt="" style="width: 20px;height:auto;" />
+                  &nbsp;{{ social.social_name }}
+                </a>
+              {% endfor %}
+            </div>
           </div>
-        </div>
-{% endblock sidebar %}
+        {% endblock %}
       </div>
     </div>
 
@@ -112,7 +114,9 @@
       </footer>
     </div>
     {% block j_script %}
+
     {% endblock %}
+
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/js/bootstrap.bundle.min.js" integrity="sha384-FKyoEForCGlyvwx9Hj09JcYn3nv7wiPVlz7YYwJrWVcXK/BmnVDxM+D2scQbITxI" crossorigin="anonymous"></script>
   </body>
 </html>

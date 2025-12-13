@@ -1,0 +1,68 @@
+{% extends '_base.html' %}
+{% block title %}
+  blog - dashboard - blogs
+{% endblock %}
+
+{% block content %}
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card p-3">
+        <h5 class="fw-bold fs-4 text-center nav-link">Total Blogs</h5>
+        <h6 class="text-center fs-5">({{ blogs.count }})</h6>
+      </div>
+    </div>
+    <div class="col">
+      <hr class="my-1 border-4 border-primary" style="width: 100%;" />
+      <a href="{% url 'dashboards:dashboard_blog_create'%}" class="px-3 my-2 btn btn-outline-success">Create a New</a>
+      <div class="card p-3">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Title</th>
+              <th scope="col">Author</th>
+              <th scope="col">Category</th>
+              <th scope="col">Status</th>
+              <th scope="col">Feature</th>
+              <th scope="col">Image</th>
+              <th scope="col">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for post in blogs %}
+              <tr>
+                <th scope="row">{{ forloop.counter }}</th>
+                <td>
+                  <a href="{% url 'dashboards:dashboard_edit_blog' post.blog_slug %}" class="nav-link">{{ post.blog_title|truncatewords:5 }}</a>
+                </td>
+                <td class="text-muted">{{ post.blog_author }}</td>
+                <td class="text-muted">{{ post.blog_category }}</td>
+                <td class="text-muted">{{ post.blog_status }}</td>
+                <td class="text-muted">
+                  {% if post.is_feature %}
+                    <i class="fa fa-check text-success"></i>
+                  {% else %}
+                    <i class="fa fa-times text-danger"></i>
+                  {% endif %}
+                </td>
+                <td>
+                  <img src="{{ post.blog_feature_image.url }}" alt="" style="width: 30px;height: 30px; border-radius: 50%;" />
+                </td>
+                <td>
+                  <div class="d-flex justify-content-between">
+                    <a href="{% url 'dashboards:dashboard_edit_blog' post.blog_slug %}"><i class="fa fa-edit text-success"></i></a>
+                    <a href="{% url 'dashboards:dashboard_delete_blog' post.blog_slug %}"><i class="fa fa-trash text-danger"></i></a>
+                  </div>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block sidebar %}
+  {% include 'dashboards/sidebar.html' %}
+{% endblock %}

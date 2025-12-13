@@ -3,6 +3,7 @@ from django.contrib.auth import get_user_model
 from django.core.exceptions import ValidationError
 from PIL import Image
 from django.urls import reverse
+import os
 
 User = get_user_model()
 
@@ -22,6 +23,7 @@ def validate_image(file):
 class Category(models.Model):
     category_name = models.CharField(max_length=100, unique=True)
     category_slug = models.SlugField(max_length=120, unique=True)
+    author = models.ForeignKey(User, on_delete=models.SET_NULL, null=True, blank=True)
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
@@ -30,6 +32,7 @@ class Category(models.Model):
 
     class Meta:
         verbose_name_plural = "categories"
+        ordering = ("-created_at",)
 
 
 BLOG_STATUS = (
@@ -55,11 +58,27 @@ class Blog(models.Model):
     created_at = models.DateTimeField(auto_now_add=True)
     updated_at = models.DateTimeField(auto_now=True)
 
+    def save(self, *args, **kwargs):
+        try:
+            old_image = Blog.objects.get(pk=self.pk).blog_feature_image
+        except Blog.DoesNotExist:
+            old_image = None
+
+        super().save(*args, **kwargs)
+
+        # If new image is uploaded and it's different → delete the old file
+        if old_image and old_image != self.blog_feature_image:
+            if os.path.isfile(old_image.path):
+                os.remove(old_image.path)
+
     def __str__(self):
         return self.blog_title
 
     def get_absolute_url(self):
         return reverse("blogs:blog_single", kwargs={"slug": self.blog_slug})
+
+    class Meta:
+        ordering = ("-created_at",)
 
 
 class Comment(models.Model):

@@ -1,13 +1,16 @@
-from django.db import models
+import os
+
 from django.contrib.auth.models import (
     AbstractBaseUser,
-    PermissionsMixin,
     BaseUserManager,
+    Group,
+    PermissionsMixin,
 )
 from django.core.exceptions import ValidationError
-from PIL import Image
-from django.db.models.signals import post_save
+from django.db import models
+from django.db.models.signals import post_save,post_delete
 from django.dispatch import receiver
+from PIL import Image
 
 
 def validate_image(file):
@@ -62,7 +65,9 @@ class UserCustom(AbstractBaseUser, PermissionsMixin):
     last_login = models.DateTimeField(auto_now=True)
 
     USERNAME_FIELD = "email"
-    REQUIRED_FIELDS = ['username',]
+    REQUIRED_FIELDS = [
+        "username",
+    ]
 
     def __str__(self):
         return self.email
@@ -75,6 +80,20 @@ class UserProfile(models.Model):
     )
     phone = models.CharField(max_length=20, blank=True, null=True)
 
+    def save(self, *args, **kwargs):
+        try:
+            old_image = UserProfile.objects.get(pk=self.pk).photo
+        except UserProfile.DoesNotExist:
+            old_image = None
+        super().save(*args, **kwargs)
+        # If new image is uploaded and it's different → delete the old file
+        if old_image and old_image != self.photo:
+            if os.path.isfile(old_image.path):
+                os.remove(old_image.path)
+
+
+        
+
     def __str__(self):
         return self.user.username
 
@@ -83,3 +102,12 @@ class UserProfile(models.Model):
 def user_post_save_receiver(sender, instance, created, **kwargs):
     if created:
         UserProfile.objects.create(user=instance)
+        group = Group.objects.get(name="Regular User")
+        instance.groups.add(group)
+
+
+@receiver(post_delete, sender=UserProfile)
+def delete_userprofile_photo(sender, instance, **kwargs):
+    if instance.photo:
+        instance.photo.delete(save=False)
+

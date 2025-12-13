@@ -81,3 +81,8 @@ a{
     color:rgb(148, 90, 153) !important;
     
 }
+
+.dashboard_active {
+   border-left: 5px solid rgb(207, 143, 212) !important;
+
+}

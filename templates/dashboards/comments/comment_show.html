@@ -1,0 +1,31 @@
+{% extends '_base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}
+  blog - dashboard - comments - show
+{% endblock %}
+
+{% block content %}
+  <div class="row">
+    <div class="col">
+      <hr class="my-1 border-4 border-primary" style="width: 100%;" />
+      <div class="d-flex justify-content-between align-items-center">
+        <a href="" class="px-3 my-2 btn fw-bold fs-6"><span class="text-muted">Comments Blog Title :</span>{{ comment.blog|capfirst }}</a>
+        <a href="{% url 'dashboards:dashboard_comments' %}?next={{ request.path }}" class="nav-link px-3">&larr; Back</a>
+      </div>
+      <div class="card p-3">
+        <h4 class="my-1">Writing By: {{ comment.user.username|capfirst }}</h4>
+        <p class="text-muted my-0 pt-0">Created at: {{ comment.created_at|timesince }}</p>
+        <hr class="my-1 border-4 border-primary" style="width: 100%;" />
+        <p>{{ comment.body }}</p>
+      </div>
+    </div>
+</div>
+<a href="{% url 'dashboards:dashboard_comments_delete' comment.id %}" class="nav-link my-3" style="border: 2px solid red; width: 120px; text-align: center; ">
+    <i class="fa fa-trash text-danger"></i>
+    Delete
+</a>
+{% endblock %}
+
+{% block sidebar %}
+  {% include 'dashboards/sidebar.html' %}
+{% endblock %}

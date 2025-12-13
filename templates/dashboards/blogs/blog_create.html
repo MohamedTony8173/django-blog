@@ -1,0 +1,23 @@
+{% extends '_base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}
+  blog - dashboard - blogs - create
+{% endblock %}
+
+{% block content %}
+  <div class="row">
+    <div class="col">
+      <div class="card p-3">
+        <form action="{% url 'dashboards:dashboard_blog_create' %}" method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          {{ form|crispy }}
+          <input type="submit" value="Create" class="btn btn-primary px-5 py-1" />
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block sidebar %}
+  {% include 'dashboards/sidebar.html' %}
+{% endblock %}

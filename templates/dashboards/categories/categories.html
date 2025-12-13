@@ -1,0 +1,52 @@
+{% extends '_base.html' %}
+{% block title %}
+  blog - dashboard - Categories
+{% endblock %}
+
+{% block content %}
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card p-3">
+        <h5 class="fw-bold fs-4 text-center nav-link">Total Categories</h5>
+        <h6 class="text-center fs-5">({{ categories.count }})</h6>
+      </div>
+    </div>
+    <div class="col">
+      <hr class="my-1 border-4 border-primary" style="width: 100%;" />
+      <a href="{% url 'dashboards:dashboard_category_create' %}" class="px-3 my-2 btn btn-outline-success">Create a New</a>
+      <div class="card p-3">
+        <table class="table table-hover">
+          <thead>
+            <tr>
+              <th scope="col">#</th>
+              <th scope="col">Title</th>
+              <th scope="col">Author</th>
+              <th scope="col" class="text-center">Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            {% for cate in categories %}
+              <tr>
+                <th scope="row">{{ forloop.counter }}</th>
+                <td>
+                  <a href="{% url 'dashboards:category_edit' cate.category_slug %}" class="nav-link">{{ cate.category_name|truncatewords:5 }}</a>
+                </td>
+                <td class="text-muted">{{ cate.author }}</td>
+                <td>
+                  <div class="d-flex justify-content-around">
+                    <a href="{% url 'dashboards:category_edit' cate.category_slug %}"><i class="fa fa-edit text-success"></i></a>
+                    <a href="{% url 'dashboards:category_delete' cate.category_slug %}"><i class="fa fa-trash text-danger"></i></a>
+                  </div>
+                </td>
+              </tr>
+            {% endfor %}
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block sidebar %}
+  {% include 'dashboards/sidebar.html' %}
+{% endblock %}

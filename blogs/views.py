@@ -52,7 +52,7 @@ def blog_search(request):
     context = {"keyword": keyword, "result": result}
     return render(request, "blogs/blog_search.html", context)
 
-
+@login_required
 def write_comment(request, b_slug):
     blog = get_object_or_404(Blog, blog_slug=b_slug)
     comments_user = Comment.objects.filter(

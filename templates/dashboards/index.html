@@ -1,1 +1,57 @@
-dashboard page
+{% extends '_base.html' %}
+{% block title %}
+  blog - dashboard
+{% endblock %}
+
+{% block content %}
+  <div class="row bg-light p-3">
+    <div class="d-flex align-items-center">
+      <h5 class="fw-bold">username: </h5><span class="nav-link mx-2"> {{request.user.username|capfirst}}</span>
+      <h6 class="tag ms-2 fw-bold">{{ blog.blog_category }}</h6>
+    </div>
+  </div>
+  <hr class="my-1 border-4 border-primary" style="width: 100%;" />
+  <div class="row">
+    <div class="col-md-6">
+      <div class="card p-5">
+        <h5 class="fw-bold fs-4 text-center nav-link">Total Blogs</h5>
+        <h6 class="text-center fs-5">({{blogs}})</h6>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="card p-5">
+        <h5 class="fw-bold fs-4 text-center nav-link">Total Categories</h5>
+        <h6 class="text-center fs-5">({{ categories.count }})</h6>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col">
+      <div>
+        <canvas id="myChart"></canvas>
+      </div>
+
+      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+      <script>
+        new Chart(document.getElementById('myChart'), {
+            type: 'line',
+            data: {
+                labels: {{ labels|safe }},
+                datasets: [{
+                    label: "Blogs per category",
+                    data: {{ data|safe }},
+                    borderColor: 'rgba(136, 60, 180, 1)',
+                    tension: 0.4,
+                    borderWidth: 2
+                }]
+            },
+            options: { scales: { y: { beginAtZero: true } } }
+        });
+        </script>
+    </div>
+  </div>
+{% endblock %}
+{% block sidebar %}
+  {% include 'dashboards/sidebar.html' %}
+{% endblock %}
