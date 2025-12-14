@@ -23,10 +23,40 @@
     <div class="card p-2 shadow-sm">
       <a href="{% url 'dashboards:dashboard_user' %}" class="nav-link px-2 {% if 'dashboard/users' in request.path %} dashboard_active {% endif %}">Users</a>
     </div>
-  {% else %}
     <hr class="my-1 border-4 border-primary" style="width: 100%;" />
     <div class="card p-2 shadow-sm">
-      <a href="" class="nav-link px-2 {% if 'dashboard/profile' in request.path %} dashboard_active {% endif %}">Profile</a>
+      <a href="{% url 'users:logout' %}" class="nav-link px-2 ">Logout</a>
+    </div>
+    {% elif request.user|has_group:'Editor' %}
+    <h1 class="nav-link fw-bold fs-5">Manager Dashboard</h1>
+    <p>Welcome, you have Editor permissions!</p>
+    <div class="card p-2 shadow-sm">
+      <a href="{% url 'dashboards:dashboard_categories' %}" class="nav-link px-2 {% if 'dashboard/categories' in request.path %} dashboard_active {% endif %}">Categories</a>
+    </div>
+    <hr class="my-1 border-4 border-primary" style="width: 100%;" />
+    <div class="card p-2 shadow-sm">
+      <a href="{% url 'dashboards:dashboard_blogs' %}" class="nav-link px-2 {% if 'dashboard/blogs' in request.path %} dashboard_active {% endif %}">Blogs</a>
+    </div>
+    <hr class="my-1 border-4 border-primary" style="width: 100%;" />
+    <div class="card p-2 shadow-sm">
+      <a href="{% url 'dashboards:dashboard_comments' %}" class="nav-link px-2 {% if 'dashboard/comments' in request.path %} dashboard_active {% endif %}">Comments</a>
+    </div>
+    <hr class="my-1 border-4 border-primary" style="width: 100%;" />
+    <div class="card p-2 shadow-sm">
+      <a href="{% url 'social:dashboard_about_page' %}" class="nav-link px-2 {% if 'about/dashboard' in request.path %} dashboard_active {% endif %}">Social & About </a>
+    </div>
+    <hr class="my-1 border-4 border-primary" style="width: 100%;" />
+    <div class="card p-2 shadow-sm">
+      <a href="{% url 'users:logout' %}" class="nav-link px-2 ">Logout</a>
+    </div>
+  {% else %}
+    <div class="card p-2 shadow-sm">
+      <a href="{% url 'dashboards:user_profile' %}" class="nav-link px-2 {% if 'dashboard/profile' in request.path %} dashboard_active {% endif %}">Profile</a>
+    </div>
+    <hr class="my-1 border-4 border-primary" style="width: 100%;" />
+    <div class="card p-2 shadow-sm">
+      <a href="{% url 'users:logout' %}" class="nav-link px-2 ">Logout</a>
     </div>
   {% endif %}
 </div>
+

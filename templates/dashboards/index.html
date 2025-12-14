@@ -1,39 +1,42 @@
 {% extends '_base.html' %}
+{% load static %}
+{% load group_tags %}
 {% block title %}
   blog - dashboard
 {% endblock %}
 
 {% block content %}
-  <div class="row bg-light p-3">
-    <div class="d-flex align-items-center">
-      <h5 class="fw-bold">username: </h5><span class="nav-link mx-2"> {{request.user.username|capfirst}}</span>
-      <h6 class="tag ms-2 fw-bold">{{ blog.blog_category }}</h6>
-    </div>
-  </div>
-  <hr class="my-1 border-4 border-primary" style="width: 100%;" />
-  <div class="row">
-    <div class="col-md-6">
-      <div class="card p-5">
-        <h5 class="fw-bold fs-4 text-center nav-link">Total Blogs</h5>
-        <h6 class="text-center fs-5">({{blogs}})</h6>
+  {% if request.user|has_group:'Manager' or request.user|has_group:'Editor' %}
+    <div class="row bg-light p-3">
+      <div class="d-flex align-items-center">
+        <h5 class="fw-bold">username:</h5><span class="nav-link mx-2">{{ request.user.username|capfirst }}</span>
+        <h6 class="tag ms-2 fw-bold">{{ blog.blog_category }}</h6>
       </div>
     </div>
-    <div class="col-md-6">
-      <div class="card p-5">
-        <h5 class="fw-bold fs-4 text-center nav-link">Total Categories</h5>
-        <h6 class="text-center fs-5">({{ categories.count }})</h6>
+    <hr class="my-1 border-4 border-primary" style="width: 100%;" />
+    <div class="row">
+      <div class="col-md-6">
+        <div class="card p-5">
+          <h5 class="fw-bold fs-4 text-center nav-link">Total Blogs</h5>
+          <h6 class="text-center fs-5">({{ blogs }})</h6>
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="card p-5">
+          <h5 class="fw-bold fs-4 text-center nav-link">Total Categories</h5>
+          <h6 class="text-center fs-5">({{ categories.count }})</h6>
+        </div>
       </div>
     </div>
-  </div>
-  <div class="row">
-    <div class="col">
-      <div>
-        <canvas id="myChart"></canvas>
-      </div>
+    <div class="row">
+      <div class="col">
+        <div>
+          <canvas id="myChart"></canvas>
+        </div>
 
-      <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+        <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-      <script>
+        <script>
         new Chart(document.getElementById('myChart'), {
             type: 'line',
             data: {
@@ -49,8 +52,35 @@
             options: { scales: { y: { beginAtZero: true } } }
         });
         </script>
+      </div>
     </div>
-  </div>
+  {% else %}
+    <div class="row bg-light p-5">
+      <hr />
+      <hr />
+      <hr />
+      <div class="col-md-4 mt-5">
+        <div class="d-flex align-items-center">
+          <h5 class="fw-bold ps-4">Welcome:</h5><span class="nav-link mx-2">{{ request.user.username|capfirst }}</span>
+        </div>
+        <div class="my-4 d-flex">
+          <img src="{{ request.user.userprofile.photo.url }}" alt="" style="width: 150px; height: 150px;border-radius: 50%; border: 5px solid #e3cdffff;" />
+        </div>
+        <div class="d-flex flex-column bd-highlight mb-3">
+          <h5 class="ms-1 nav-link"><span class="text-muted">E_mail:</span>{{ request.user.email }}</h5>
+          <h5 class="ms-1 nav-link"><span class="text-muted">Phone:</span>{{ request.user.userprofile.phone }}</h5>
+        </div>
+      </div>
+      <div class="col-md-8 mx-auto text-center">
+        <div class="">
+          <img src="{% static 'img/u_blog.png' %}" alt="" />
+        </div>
+      </div>
+      <hr />
+      <hr />
+      <hr />
+    </div>
+  {% endif %}
 {% endblock %}
 {% block sidebar %}
   {% include 'dashboards/sidebar.html' %}

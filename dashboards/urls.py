@@ -45,4 +45,8 @@ urlpatterns = [
     path('users/create/',views.dashboard_user_create,name='dashboard_user_create'),
     path('users/<str:username>/edit/',views.dashboard_user_edit,name='dashboard_user_edit'),
     path('users/<str:username>/delete/',views.dashboard_user_delete,name='dashboard_user_delete'),
+
+    # user profile
+      # profile user
+    path('profile/',views.user_profile,name='user_profile')
 ]

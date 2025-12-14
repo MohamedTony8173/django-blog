@@ -12,12 +12,20 @@
           <hr class="my-1 border-3 border-primary" style="width: 60px;" />
           <p class="text-muted">{{ about.about_content|truncatewords:30 }}</p>
         </div>
-        <a href="{% url 'social:dashboard_about_edit' about.about_header %}" class="nav-link mx-3" style="border: 2px solid purple;width: 100px; margin: auto; text-align: center;"><i class="fa fa-edit"></i> Edit </a>
+        <a href="{% url 'social:dashboard_about_edit' about.about_header %}" class="nav-link mx-3" style="border: 2px solid purple;width: 100px; margin: auto; text-align: center;"><i class="fa fa-edit"></i> Edit</a>
       </div>
     </div>
-</div>
-<hr class="my-1 border-3 border-primary" style="width: 100%;" />
+  </div>
+
+  <hr class="my-1 border-3 border-primary" style="width: 100%;" />
   <div class="row bg-light p-3">
+    <div class="row bg-light p-3">
+      <div class="col mx-auto">
+        <div class="card">
+          <a href="{% url 'social:dashboard_social_create' %}" class="nav-link mx-3" style="border: 2px solid purple;width: 200px; margin: auto; text-align: center;">Create a New</a>
+        </div>
+      </div>
+    </div>
     <div class="col mx-auto">
       <h5 class="fw-bold px-4 nav-link my-2 fs-4">Social Media</h5>
       <div class="card">
@@ -37,16 +45,16 @@
                 <tr>
                   <th scope="row">{{ forloop.counter }}</th>
                   <td>
-                    <a href="" class="nav-link">{{ social.social_name }}</a>
+                    <a href="{% url 'social:dashboard_social_edit' social.social_name %}" class="nav-link">{{ social.social_name }}</a>
                   </td>
                   <td>{{ social.social_link }}</td>
                   <td>
-                    <img src="{{ social.social_icon.url }}" alt="" style="width: 30px;height: 30px; border-radius: 50%;" class="d-block"/>
+                    <img src="{{ social.social_icon.url }}" alt="" style="width: 30px;height: 30px; border-radius: 50%;" class="d-block" />
                   </td>
                   <td>
                     <div class="d-flex justify-content-between">
-                      <a href=""><i class="fa fa-edit text-success"></i></a>
-                      <a href=""><i class="fa fa-trash text-danger"></i></a>
+                      <a href="{% url 'social:dashboard_social_edit' social.social_name %}"><i class="fa fa-edit text-success"></i></a>
+                      <a href="{% url 'social:dashboard_social_delete' social.social_name %}"><i class="fa fa-trash text-danger"></i></a>
                     </div>
                   </td>
                 </tr>

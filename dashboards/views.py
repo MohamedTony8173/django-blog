@@ -230,3 +230,23 @@ def dashboard_comments_search(request):
     }
     return render(request, "dashboards/comments/search.html", context)
 
+
+@login_required
+def user_profile(request):
+    user = request.user
+    user_pro = get_object_or_404(UserProfile, user=user)
+    if request.method == 'POST':
+        form = DashboardUserProfile(request.POST,request.FILES,instance=user_pro)
+        if form.is_valid():
+            form.save()
+            messages.success(request,'it was Updated!')
+            return redirect(request.path_info)
+    else:
+        form = DashboardUserProfile(instance=user_pro)  
+    context = {
+        'form':form,
+        'user_pro':user_pro
+    }
+    return render(request, "dashboards/users/profile.html", context)      
+
+    

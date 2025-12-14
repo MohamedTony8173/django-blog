@@ -21,7 +21,7 @@ class CategoryForm(forms.ModelForm):
 class DashboardUserForm(forms.ModelForm):
     class Meta:
         model = User 
-        fields = ('email','username','is_active','is_staff','groups')
+        fields = ('email','username','is_active','groups')
 
 class DashboardUserProfile(forms.ModelForm):
     class Meta:
@@ -32,4 +32,5 @@ class DashboardUserProfile(forms.ModelForm):
 class DashboardUserFormCreation(UserCreationForm):
     class Meta:
         model = User 
-        fields = ('username','email','is_active','is_staff','groups')
+        fields = ('username','email','is_active','groups')
+

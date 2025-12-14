@@ -9,7 +9,7 @@ from django.shortcuts import redirect, render
 from django.template.loader import render_to_string
 from django.utils.encoding import force_bytes, force_str
 from django.utils.http import urlsafe_base64_decode, urlsafe_base64_encode
-
+from django.contrib.auth.decorators import login_required
 from .forms import LoginForm, RegistrationForm
 
 User = get_user_model()
@@ -85,3 +85,5 @@ def user_logout(request):
     if request.user.is_authenticated:
         logout(request)
     return redirect("blogs:home")
+
+

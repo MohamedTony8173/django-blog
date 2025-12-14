@@ -1,0 +1,28 @@
+{% extends '_base.html' %}
+{% load crispy_forms_tags %}
+{% block title %}
+  blog - dashboard - user -profile
+{% endblock %}
+
+{% block content %}
+  <div class="row">
+    <div class="col">
+        <a href="" class="px-3 my-2 btn fw-bold fs-5"><span class="text-muted">Username:</span> {{user_pro.user.username | capfirst}}</a>
+        <hr class="my-1 border-4 border-primary" style="width: 100%;" />
+        <div class="card p-3">
+            <div style="" class="mb-4">
+                <img src="{{user_pro.photo.url}}" alt="" class="img-fluid shadow-sm" style=" border-radius: 50%;width: 150px;height: 150px; border: 5px solid #eed4ffff;">
+            </div>
+        <form action="{% url 'dashboards:user_profile' %}" method="post" enctype="multipart/form-data">
+          {% csrf_token %}
+          {{ form|crispy }}
+          <input type="submit" value="Edit" class="btn btn-primary px-5 py-1" />
+        </form>
+      </div>
+    </div>
+  </div>
+{% endblock %}
+
+{% block sidebar %}
+  {% include 'dashboards/sidebar.html' %}
+{% endblock %}
